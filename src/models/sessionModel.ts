@@ -6,10 +6,15 @@
  *   https://www.robinwieruch.de/node-js-express-tutorial
  */
 
-type sessionModel = {
-  sessionID: string; // uuid
-  startTime: number; // in milliseconds since epoch
-  endTime: number; // in milliseconds since epoch
-};
+import mongoose from "mongoose";
 
-export default sessionModel;
+const sessionSchema = new mongoose.Schema(
+  {
+    sessionID: { type: String, required: true, unique: true }, // uuid
+  },
+  { timestamps: true },
+);
+
+const Session = mongoose.model("Session", sessionSchema);
+
+export default Session;
