@@ -10,8 +10,8 @@ import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser"; //allows us to get passed in api calls easily
-
 import routes from "./routers/routerIndex";
+import { connectDb } from "./models/modelsIndex";
 
 // initialize configuration
 dotenv.config();
@@ -41,8 +41,7 @@ app.get("/", (_req, res) => {
 app.use("/session", routes.sessionRouter);
 app.use("/logging", routes.loggingRouter);
 
-// start the express server
-app.listen(port, () => {
-  // tslint:disable-next-line:no-console
-  console.log(`server started at http://localhost:${port}`);
+// Connect to mongoDB and start the express server
+connectDb().then(async () => {
+  app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 });

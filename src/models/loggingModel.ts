@@ -5,13 +5,19 @@
  * Credits:
  *   https://www.robinwieruch.de/node-js-express-tutorial
  */
+import mongoose from "mongoose";
 
-type loggingModel = {
-  sessionID: string; // uuid
-  landingPageSurveyRating?: number; // range [1:5]
-  landingPageFeedback?: string;
-  dashboardRating?: number;
-  dashboardFeedback?: string;
-};
+const loggingSchema = new mongoose.Schema(
+  {
+    sessionID: { type: String, required: true, unique: true }, // uuid
+    landingPageSurveyRating: { type: Number }, // range [1:5]
+    landingPageFeedback: { type: String },
+    dashboardRating: { type: Number }, // range [1:5]
+    dashboardFeedback: { type: String },
+  },
+  { timestamps: true },
+);
 
-export default loggingModel;
+const Logging = mongoose.model("Logging", loggingSchema);
+
+export default Logging;
